@@ -86,6 +86,7 @@ impl DiscordIpc for DiscordIpcClient {
         let socket = self.socket.as_mut().unwrap();
 
         socket.read_exact(buffer)?;
+        socket.flush()?;
 
         Ok(())
     }
