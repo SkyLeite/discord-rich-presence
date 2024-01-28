@@ -114,7 +114,7 @@ pub trait DiscordIpc {
         dbg!(&header);
         self.write(&header)?;
 
-        dbg(&data_string);
+        dbg!(&data_string);
         self.write(data_string.as_bytes())?;
 
         Ok(())
