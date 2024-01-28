@@ -111,7 +111,10 @@ pub trait DiscordIpc {
         let data_string = data.to_string();
         let header = pack(opcode.into(), data_string.len() as u32)?;
 
+        dbg!(&header);
         self.write(&header)?;
+
+        dbg(&data_string);
         self.write(data_string.as_bytes())?;
 
         Ok(())
