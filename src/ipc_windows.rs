@@ -59,6 +59,7 @@ impl DiscordIpc for DiscordIpcClient {
         let socket = self.socket.as_mut().expect("Client not connected");
 
         socket.write_all(data)?;
+        socket.flush()?;
 
         Ok(())
     }
