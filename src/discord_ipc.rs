@@ -111,17 +111,17 @@ pub trait DiscordIpc {
         let data_string = data.to_string();
         let header = pack(opcode.into(), data_string.len() as u32)?;
 
-        dbg!(&header);
         self.write(&header)?;
-
-        dbg!(&data_string);
         self.write(data_string.as_bytes())?;
+        self.flush()?;
 
         Ok(())
     }
 
     #[doc(hidden)]
     fn write(&mut self, data: &[u8]) -> Result<()>;
+
+    fn flush(&mut self) -> Result<()>;
 
     /// Receives an opcode and JSON data from the Discord IPC.
     ///

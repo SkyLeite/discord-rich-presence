@@ -39,6 +39,14 @@ impl DiscordIpcClient {
 }
 
 impl DiscordIpc for DiscordIpcClient {
+    fn flush(&mut self) -> Result<()> {
+        let socket = self.socket.as_mut().expect("Client not connected");
+
+        socket.flush()?;
+
+        Ok(())
+    }
+
     fn connect_ipc(&mut self) -> Result<()> {
         for i in 0..10 {
             let path = PathBuf::from(format!(r"\\?\pipe\discord-ipc-{}", i));
@@ -59,7 +67,6 @@ impl DiscordIpc for DiscordIpcClient {
         let socket = self.socket.as_mut().expect("Client not connected");
 
         socket.write_all(data)?;
-        socket.flush()?;
 
         Ok(())
     }

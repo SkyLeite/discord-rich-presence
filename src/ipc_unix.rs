@@ -58,6 +58,14 @@ impl DiscordIpcClient {
 }
 
 impl DiscordIpc for DiscordIpcClient {
+    fn flush(&mut self) -> Result<()> {
+        let socket = self.socket.as_mut().expect("Client not connected");
+
+        socket.flush()?;
+
+        Ok(())
+    }
+
     fn connect_ipc(&mut self) -> Result<()> {
         for i in 0..10 {
             let path = DiscordIpcClient::get_pipe_pattern().join(format!("discord-ipc-{}", i));
